@@ -1,4 +1,4 @@
-```{r setup, message=FALSE, warning=FALSE}
+```{r setup, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(dplyr)
 library(Rmisc)
@@ -8,7 +8,7 @@ library(gridExtra)
 #install.packages('car')
 library(car)
 
-options(width=100)
+options(width = 100)
 ```
 
 # **Question 1**
@@ -17,11 +17,11 @@ options(width=100)
 
 ### Data Preparation
 
-```{r Uploading Data Tutoringi, message=FALSE, warning=FALSE}
+```{r Uploading Data Tutoring, message = FALSE, warning = FALSE}
 tutoring_data <- read_csv("tutoring_test_data.txt")
 ```
 
-```{r Data Preparation Tutoring, message=FALSE, warning=FALSE, fig.align='center', fig.width=10}
+```{r Data Preparation Tutoring, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Checking the structure of the data and the summary
 str(tutoring_data)
 summary(tutoring_data)
@@ -65,7 +65,7 @@ ggplot(tutoring_data_new, aes(absences, ..density..)) + geom_histogram(binwidth 
 
 ```
 
-```{r Summary Statistics the Tutoring Data, message=FALSE, warning=FALSE, fig.align='center', fig.width=10}
+```{r Summary Statistics the Tutoring Data, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Finding the means and standard deviations of the test scores and the absence rates to be used to compare the distributions with normal distribution
 ( tutoring_data_summary_by_tutoring <- tutoring_data_new %>% 
   dplyr::group_by(tutoring) %>% 
@@ -94,7 +94,7 @@ grid.arrange(
 
 ### Checking whether the students allocated to the tutored and non-tutored groups had similar or different average test scores before the tutoring scheme began
 
-```{r Question 1 Before the Buddying Scheme, message=FALSE, warning=FALSE, fig.align='center', fig.width=10}
+```{r Question 1 Before the Buddying Scheme, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Doing NHST for the test scores of the students before the buddying scheme by tutoring
 ( scores.before.t.test <- t.test(score.t1 ~ tutoring, tutoring_data_new) )
 ### The mean score difference of test 1 is not significantly different from each other, Welch t(196.54) = -1.05, p = 0.30.
@@ -125,7 +125,7 @@ grid.before <- grid.arrange(
 
 ### Checking whether the tutored and non-tutored students have similar or different rates of absences on average
 
-```{r Visualising, message=FALSE, warning=FALSE, fig.align='center', fig.width=10}
+```{r Visualising, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Visualising the absence rates for Tutored and Non-tutored students
 ggplot(tutoring_data_new, aes(absences, ..density.., fill = tutoring)) + 
   geom_histogram(binwidth = 1.3, position = "identity", alpha = 0.5) + 
@@ -137,7 +137,7 @@ ggplot(tutoring_data_new, aes(absences, ..density.., fill = tutoring)) +
 
 **NHST**
 
-```{r Question 1 Absences On Average, message=FALSE, warning=FALSE}
+```{r Question 1 Absences On Average, message = FALSE, warning = FALSE}
 # Doing NHST for the absence proportions of the students by tutoring
 ( absences.t.test <- t.test(absences ~ tutoring, tutoring_data_new) )
 ### The mean of the proportion of absent class time for Non-tutored students is not significantly different from Tutored students', Welch t(198) = -0.99, p = 0.33.
@@ -146,7 +146,7 @@ ggplot(tutoring_data_new, aes(absences, ..density.., fill = tutoring)) +
 
 **Estimation**
 
-```{r Question 1 Absences On Average 2, message=FALSE, warning=FALSE, fig.align='center', fig.width=10}
+```{r Question 1 Absences On Average 2, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Estimation of proportion of absences by tutoring using linear modelling 
 absences.lm <- lm(absences ~ tutoring, tutoring_data_new)
 absences.emm <- emmeans(absences.lm, ~tutoring) # Checking the mean, lower.CL and upper.CL values of absence rates
@@ -202,13 +202,13 @@ grid.absences.main.effect.score.t1 <- grid.arrange(
 )
 ### Even though taking test score 1 into consideration proved to improve the model, the Difference in Absence Rates By Test Score 1 graph shows that tutoring along with test score 1 is not significant since the line plotted is crossing 0
 
-grid.arrange(grid.absences, grid.absences.main.effect.score.t1, nrow=2)
+grid.arrange(grid.absences, grid.absences.main.effect.score.t1, nrow = 2)
 
 ```
 
 ### Checking whether the tutored students show an increase in their scores compared to the students who did not receive tutoring
 
-```{r Question 1 Comparison of Test Scores After the Buddying Scheme, message=FALSE, warning=FALSE}
+```{r Question 1 Comparison of Test Scores After the Buddying Scheme, message = FALSE, warning = FALSE}
 # Adding the change in the test scores after the Buddying Scheme to the data set under a new column called score_change
 tutoring_data_new <- mutate(tutoring_data_new, score_change = score.t2 - score.t1)
 
@@ -216,7 +216,7 @@ tutoring_data_new <- mutate(tutoring_data_new, score_change = score.t2 - score.t
 
 **NHST**
 
-```{r Question 1 Comparison of Test Scores After the Buddying Scheme 2, message=FALSE, warning=FALSE}
+```{r Question 1 Comparison of Test Scores After the Buddying Scheme 2, message = FALSE, warning = FALSE}
 # Doing NHST for the score differences of test scores by tutoring
 ( score.difference.t <- t.test(score_change ~ tutoring, tutoring_data_new) )
 ### The mean of the score differences for Non-tutored students is significantly larger for Tutored students than Non-tutored student's score differences, Welch t(194) = -5.08, p < .0001.
@@ -225,7 +225,7 @@ tutoring_data_new <- mutate(tutoring_data_new, score_change = score.t2 - score.t
 
 **Estimation**
 
-```{r Question 1 Comparison of Test Scores After the Buddying Scheme 3, message=FALSE, warning=FALSE, fig.align='center', fig.width=10}
+```{r Question 1 Comparison of Test Scores After the Buddying Scheme 3, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Estimation of the score differences by tutoring using linear modelling 
 score.difference.lm <- lm(score_change ~ tutoring, tutoring_data_new)
 score.difference.emm <- emmeans(score.difference.lm, ~ tutoring) # Checking the mean, lower.CL and upper.CL values of score differences
@@ -250,25 +250,25 @@ score.difference.plot <- grid.arrange(
 
 ### Checking whether there are any effects of absences on the change in scores, and whether these have any interaction with the effect of tutoring
 
-```{r Question 1 Effect of Absences on the Change in Test Scores, message=FALSE, warning=FALSE}
+```{r Question 1 Effect of Absences on the Change in Test Scores, message = FALSE, warning = FALSE}
 # Doing NHST to see the whether there is any effect of absences on the change in test scores using linear modelling
 scoreVSabsence.lm <- lm(score_change ~ tutoring + absences, tutoring_data_new) # To create a multiple linear regression model to check the effects of absences, tutoring and their interaction on the score difference.
 ( nhst.scoreVSabsence <- summary(scoreVSabsence.lm) )
-### The results of the regression show that there is a significant main effect of tutoring upon score differences (b=4.26, t(197)=5.137, p<0.0001) but there is not a significant main effect of absence rate upon score difference (b= -0.12, t(197)= -0.984, p=0.33). 
+### The results of the regression show that there is a significant main effect of tutoring upon score differences (b = 4.26, t(197) = 5.137, p < 0.0001) but there is not a significant main effect of absence rate upon score difference (b = -0.12, t(197) = -0.984, p = 0.33). 
 
 # Checking the interaction of tutoring with absences and change in scores
 scoreVSabsence.lm.interaction <- lm(score_change ~ tutoring * absences, tutoring_data_new) 
 ( scoreVSabsence.interaction <- (summary(scoreVSabsence.lm.interaction)) )
-### The results of the regression show that there is not a significant main effect of absences upon score difference (b=-0.14, t(196)=-0.782, p=0.44) but there is a significant main effect of tutoring upon score difference (b=4.04, t(196)=2.25, p=0.03). There was also no significant interaction effect between absences and tutoring, with the positive effect of tutoring being significantly smaller when absences were present (b=0.03, t(196)=0.143, p=0.89).
+### The results of the regression show that there is not a significant main effect of absences upon score difference (b = -0.14, t(196) = -0.782, p = 0.44) but there is a significant main effect of tutoring upon score difference (b = 4.04, t(196) = 2.25, p = 0.03). There was also no significant interaction effect between absences and tutoring, with the positive effect of tutoring being significantly smaller when absences were present (b = 0.03, t(196) = 0.143, p = 0.89).
 
 anova.score.diff.scoreVSabsence <- anova(score.difference.lm, scoreVSabsence.lm) # To compare the models where score differences by tutoring and where score differences by tutoring and absence rates are included to see if a more complex model is more accurate overall
-### Model comparison shows that a regression model including tutoring and absence rate does not result in a significantly better overall fit than a model only including tutoring F(1,197)=0.97, p=0.33.
+### Model comparison shows that a regression model including tutoring and absence rate does not result in a significantly better overall fit than a model only including tutoring F(1,197) = 0.97, p = 0.33.
 
 anova.score.diff.scoreVSabsence.interaction <- anova(score.difference.lm, scoreVSabsence.lm.interaction) # To compare the models where score differences by tutoring and where score differences by tutoring and absence rates are interacting with each other are included to see if a more complex model is more accurate overall
-### Model comparison shows that a regression model including tutoring and absence rate with interactions does not result in a significantly better overall fit than a model only including tutoring F(1,196) = 0.49, p=0.61
+### Model comparison shows that a regression model including tutoring and absence rate with interactions does not result in a significantly better overall fit than a model only including tutoring F(1,196) = 0.49, p = 0.61
 
 anova.score.diff.scoreVSabsence <- anova(scoreVSabsence.lm.interaction, scoreVSabsence.lm) # To compare the models where score differences by tutoring and where score differences by tutoring and absence rates are included to see if a more complex model is more accurate overall
-### Model comparison shows that a regression model including tutoring and absence rate does not result in a significantly better overall fit than a model including tutoring and absence rate with interactions F(1,196)=0.02, p=0.89.
+### Model comparison shows that a regression model including tutoring and absence rate does not result in a significantly better overall fit than a model including tutoring and absence rate with interactions F(1,196) = 0.02, p = 0.89.
 
 ```
 
@@ -282,8 +282,119 @@ In this study, among 202 participants, 101 were Tutored and 101 were Non-Tutored
 
 Prior to any calculations, data were examined for outliers. The second test score had a maximum value of 200 which was omitted since the highest possible score a student can receive is 100. In addition, the maximum value for absence rates was 100 which meant the student did not attend any of the classes which is a highly unlikely situation, hence the distribution of the absence rate was plotted in order to find a plausible limit.
 
-```{r echo=FALSE, include=TRUE, fig.align='center', fig.width=10}
+```{r echo = FALSE, include = TRUE, fig.align = 'center', fig.width = 10}
 absence_distribution_initial_plot
 ```
 
 After examining the graph, the absence variable was limited to 25 and the outliers were removed from the dataset. Once the data were checked again, there were no other irrational data.
+
+### Relationship between being tutored and average test scores prior to the Buddying Scheme
+
+Following the data cleansing, the relationship between being tutored and average test scores prior to the Buddying Scheme was checked as well as the difference in the scores in order to have a better understanding of the student profiles. 
+
+```{r echo = FALSE, include = TRUE, fig.align = 'center', fig.width = 10}
+grid.arrange(
+	ggplot(summary(scores.before.emm), aes(x = emmean, y = tutoring, xmin = lower.CL, xmax = upper.CL)) + 
+		geom_point(colour = "steelblue") + geom_linerange() + 
+		labs(x = "Tutoring", y = "Scores", title = "Mean of Scores Before the Scheme", subtitle = "Error bars are 95% CIs") + 
+	  xlim(-10, 63) + coord_flip(), 
+	ggplot(scores.before.contrast, aes(x = estimate, y = contrast, xmin = lower.CL, xmax = upper.CL)) + 
+		geom_point(colour = "steelblue") + geom_linerange() + 
+		labs(x = "Difference in Changes in Scores", y = "Contrast", title = "Difference in Scores Before the Scheme", subtitle = "Error bars are 95% CIs") +
+		geom_vline(xintercept = 0, lty = 2) + xlim(-10, 63) + coord_flip(),
+	ncol = 2
+)
+```
+
+T-test and linear modelling tools were used. The mean score difference of test 1 is not significantly different from each other, Welch t(196.54) = -1.05, p = 0.30 was concluded. The mean score for Non-tutored students is 52.9 95% CI [50.4–55.4] before the scheme. The mean score for Tutored students is 54.8 95% CI [52.3–57.3] before the scheme. The mean score is 1.88 95% CI [-1.67–5.43] smaller for Non-tutored students compared to Tutored students.
+
+### Relationship between mean absence rates and tutoring
+
+First, a t-test was conducted. 
+
+```{r echo = FALSE, include = TRUE}
+absences.t.test
+```
+
+The mean of the proportion of absent class time for Non-tutored students is not significantly different from Tutored students', Welch t(198) = -0.99, p = 0.33.
+
+In order to examine the different CIs, the estimation method was also applied.
+
+```{r echo = FALSE, include = TRUE}
+absences.contrast
+```
+
+The mean of the absent class time proportion for Non-Tutored students is 6.31 95% CI [5.63–6.99]. The mean of the absent class time proportion for Tutored students is 6.79 95% CI [6.11–7.47]. The mean is 0.48 95% CI [-0.48–1.44] smaller for Non-tutored students compared to Tutored students.
+
+Initially, a linear model was created to predict the absence proportion from tutoring, the score of test 1, and the score of test 2. However, after checking the VIF scores to measure each variable’s shared variance with all other variables, it was observed that some ANOVA tests had to be performed to decide whether it can be justified to keep all of the predictors in the model.
+
+```{r echo = FALSE, include = TRUE}
+vif(absences.test.scores.lm)
+```
+
+The models where both test scores are included and where only the first test score is included were compared in order to see if a more complex model is more accurate overall.
+
+```{r echo = FALSE, include = TRUE}
+anova(absences.test.scores.lm, absences.test.score.t1.lm)
+```
+
+The comparison shows that a regression model including tutoring, the score of test 1, and the score of test 2 does not result in a significantly better overall fit than a model only including tutoring and score of test 1 F(1,196) = 0.60, p = 0.44.
+
+Then, the models where none of the test scores are included and where only the first test score is included were compared in order to see if a more complex model is more accurate overall.
+
+```{r echo = FALSE, include = TRUE}
+anova(absences.lm, absences.test.score.t1.lm)
+```
+The comparison shows that a regression model including only tutoring results in a significantly better overall fit than a model only including tutoring and score of test 1 F(1,198) = 27.45 p < .0001.
+
+The improved model gives the following information.
+
+```{r echo = FALSE, include = TRUE}
+knitr::kable(absences.test.score.t1.emm, caption = "Mean of Absence Rates of The Students with 95% CIs By Test Scores") # To see the overall more clearly
+```
+
+```{r echo = FALSE, include = TRUE, fig.align = 'center', fig.width = 10}
+grid.absences.main.effect.score.t1
+```
+
+Even though taking test score 1 into consideration proved to improve the model, the difference in absence rates is not significant.
+
+### Relationship between tutoring and test score differences
+
+Following examining the absence and test score relationships by tutoring information, whether the tutored students show an increase in their scores compared to the students who did not receive tutoring was inspected. Prior to any further analysis, the score difference for each student was calculated.
+
+In order to analyze the relationship between tutoring and test score differences, t-test and linear modelling were used as statistical tools.
+
+```{r echo = FALSE, include = TRUE}
+score.difference.t
+```
+
+```{r echo = FALSE, include = TRUE}
+score.difference.contrast
+```
+
+The mean of the score differences for Non-tutored students is significantly larger for Tutored students than Non-tutored students' score differences, Welch t(194) = -5.08, p < .0001. The mean of the score differences for Non-tutored students is -0.44 95% CI [-1.59–0.71]. The mean of the score differences for Tutored students is 3.77 95% CI [2.61–4.92]. The mean is 4.21 95% CI [2.57–5.84] smaller for Non-Tutored students compared to Tutored students.
+
+```{r echo = FALSE, include = TRUE}
+score.difference.plot
+```
+
+### Relationship between absences and test score difference and investigating the interaction with tutoring
+
+Finally, whether there are any effects of absences on the change in scores, and whether these have any interaction with the effect of tutoring were inspected.
+
+```{r echo = FALSE, include = TRUE}
+nhst.scoreVSabsence
+```
+
+The mean of the score differences for Non-tutored students is significantly different for Tutored students from Non-tutored students' score differences when the effect of tutoring is considered, Welch t(197) = 5.137, p<.0001. The mean of the score differences for Non-tutored students is not significantly different for Tutored students from Non-tutored students' score differences when the effect of absence rates is considered, Welch t(197) = -0.984, p = 0.33.
+
+Then, the interaction of tutoring and absences were checked.
+
+```{r echo = FALSE, include = TRUE}
+scoreVSabsence.interaction
+```
+
+The results of the regression show that there is not a significant main effect of absences upon score difference (b = -0.14, t(196) = -0.782, p = 0.44) but there is a significant main effect of tutoring upon score difference (b = 4.04, t(196) = 2.25, p = 0.03). There was also no significant interaction effect between absences and tutoring, with the positive effect of tutoring being significantly smaller when absences were present (b = 0.03, t(196) = 0.143, p = 0.89).
+
+After reaching these conclusions, some ANOVA tests were performed to decide whether it is justified to keep all of the predictors in the model. The tests showed that there is no significant relationship between the change in test scores and the increase in the absence rates. Similarly, their interaction effect was found to be not significant and that inclusion of it does not improve the model. 
