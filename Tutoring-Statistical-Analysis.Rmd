@@ -92,7 +92,7 @@ grid.arrange(
 
 ## Checking whether the students allocated to the tutored and non-tutored groups had similar or different average test scores before the tutoring scheme began
 
-```{r Question 1 Before the Buddying Scheme, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
+```{r Before the Buddying Scheme, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Doing NHST for the test scores of the students before the buddying scheme by tutoring
 ( scores.before.t.test <- t.test(score.t1 ~ tutoring, tutoring_data_new) )
 ### The mean score difference of test 1 is not significantly different from each other, Welch t(196.54) = -1.05, p = 0.30.
@@ -135,7 +135,7 @@ ggplot(tutoring_data_new, aes(absences, ..density.., fill = tutoring)) +
 
 **NHST**
 
-```{r Question 1 Absences On Average, message = FALSE, warning = FALSE}
+```{r Absences On Average, message = FALSE, warning = FALSE}
 # Doing NHST for the absence proportions of the students by tutoring
 ( absences.t.test <- t.test(absences ~ tutoring, tutoring_data_new) )
 ### The mean of the proportion of absent class time for Non-tutored students is not significantly different from Tutored students', Welch t(198) = -0.99, p = 0.33.
@@ -144,7 +144,7 @@ ggplot(tutoring_data_new, aes(absences, ..density.., fill = tutoring)) +
 
 **Estimation**
 
-```{r Question 1 Absences On Average 2, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
+```{r Absences On Average 2, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Estimation of proportion of absences by tutoring using linear modelling 
 absences.lm <- lm(absences ~ tutoring, tutoring_data_new)
 absences.emm <- emmeans(absences.lm, ~tutoring) # Checking the mean, lower.CL and upper.CL values of absence rates
@@ -206,7 +206,7 @@ grid.arrange(grid.absences, grid.absences.main.effect.score.t1, nrow = 2)
 
 ## Checking whether the tutored students show an increase in their scores compared to the students who did not receive tutoring
 
-```{r Question 1 Comparison of Test Scores After the Buddying Scheme, message = FALSE, warning = FALSE}
+```{r Comparison of Test Scores After the Buddying Scheme, message = FALSE, warning = FALSE}
 # Adding the change in the test scores after the Buddying Scheme to the data set under a new column called score_change
 tutoring_data_new <- mutate(tutoring_data_new, score_change = score.t2 - score.t1)
 
@@ -214,7 +214,7 @@ tutoring_data_new <- mutate(tutoring_data_new, score_change = score.t2 - score.t
 
 **NHST**
 
-```{r Question 1 Comparison of Test Scores After the Buddying Scheme 2, message = FALSE, warning = FALSE}
+```{r Comparison of Test Scores After the Buddying Scheme 2, message = FALSE, warning = FALSE}
 # Doing NHST for the score differences of test scores by tutoring
 ( score.difference.t <- t.test(score_change ~ tutoring, tutoring_data_new) )
 ### The mean of the score differences for Non-tutored students is significantly larger for Tutored students than Non-tutored student's score differences, Welch t(194) = -5.08, p < .0001.
@@ -223,7 +223,7 @@ tutoring_data_new <- mutate(tutoring_data_new, score_change = score.t2 - score.t
 
 **Estimation**
 
-```{r Question 1 Comparison of Test Scores After the Buddying Scheme 3, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
+```{r Comparison of Test Scores After the Buddying Scheme 3, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Estimation of the score differences by tutoring using linear modelling 
 score.difference.lm <- lm(score_change ~ tutoring, tutoring_data_new)
 score.difference.emm <- emmeans(score.difference.lm, ~ tutoring) # Checking the mean, lower.CL and upper.CL values of score differences
@@ -248,7 +248,7 @@ score.difference.plot <- grid.arrange(
 
 ## Checking whether there are any effects of absences on the change in scores, and whether these have any interaction with the effect of tutoring
 
-```{r Question 1 Effect of Absences on the Change in Test Scores, message = FALSE, warning = FALSE}
+```{r Effect of Absences on the Change in Test Scores, message = FALSE, warning = FALSE}
 # Doing NHST to see the whether there is any effect of absences on the change in test scores using linear modelling
 scoreVSabsence.lm <- lm(score_change ~ tutoring + absences, tutoring_data_new) # To create a multiple linear regression model to check the effects of absences, tutoring and their interaction on the score difference.
 ( nhst.scoreVSabsence <- summary(scoreVSabsence.lm) )
