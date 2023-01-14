@@ -11,11 +11,9 @@ library(car)
 options(width = 100)
 ```
 
-# **Question 1**
+# **Section 1**
 
-## **Section 1**
-
-### Data Preparation
+## Data Preparation
 
 ```{r Uploading Data Tutoring, message = FALSE, warning = FALSE}
 tutoring_data <- read_csv("tutoring_test_data.txt")
@@ -92,7 +90,7 @@ grid.arrange(
 
 ```
 
-### Checking whether the students allocated to the tutored and non-tutored groups had similar or different average test scores before the tutoring scheme began
+## Checking whether the students allocated to the tutored and non-tutored groups had similar or different average test scores before the tutoring scheme began
 
 ```{r Question 1 Before the Buddying Scheme, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Doing NHST for the test scores of the students before the buddying scheme by tutoring
@@ -123,7 +121,7 @@ grid.before <- grid.arrange(
 
 ```
 
-### Checking whether the tutored and non-tutored students have similar or different rates of absences on average
+## Checking whether the tutored and non-tutored students have similar or different rates of absences on average
 
 ```{r Visualising, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 10}
 # Visualising the absence rates for Tutored and Non-tutored students
@@ -206,7 +204,7 @@ grid.arrange(grid.absences, grid.absences.main.effect.score.t1, nrow = 2)
 
 ```
 
-### Checking whether the tutored students show an increase in their scores compared to the students who did not receive tutoring
+## Checking whether the tutored students show an increase in their scores compared to the students who did not receive tutoring
 
 ```{r Question 1 Comparison of Test Scores After the Buddying Scheme, message = FALSE, warning = FALSE}
 # Adding the change in the test scores after the Buddying Scheme to the data set under a new column called score_change
@@ -248,7 +246,7 @@ score.difference.plot <- grid.arrange(
 
 ```
 
-### Checking whether there are any effects of absences on the change in scores, and whether these have any interaction with the effect of tutoring
+## Checking whether there are any effects of absences on the change in scores, and whether these have any interaction with the effect of tutoring
 
 ```{r Question 1 Effect of Absences on the Change in Test Scores, message = FALSE, warning = FALSE}
 # Doing NHST to see the whether there is any effect of absences on the change in test scores using linear modelling
@@ -274,7 +272,7 @@ anova.score.diff.scoreVSabsence <- anova(scoreVSabsence.lm.interaction, scoreVSa
 
 ---
 
-## **Section 2 - Report**
+# **Section 2 - Report**
 
 The findings in this report are based on the examination of the relationship of the test scores and absence proportions of students that had a tutor and did not have a tutor, which will be referred to as "Tutored" and "Non-Tutored", respectively throughout the report. 
 
@@ -288,7 +286,7 @@ absence_distribution_initial_plot
 
 After examining the graph, the absence variable was limited to 25 and the outliers were removed from the dataset. Once the data were checked again, there were no other irrational data.
 
-### Relationship between being tutored and average test scores prior to the Buddying Scheme
+## Relationship between being tutored and average test scores prior to the Buddying Scheme
 
 Following the data cleansing, the relationship between being tutored and average test scores prior to the Buddying Scheme was checked as well as the difference in the scores in order to have a better understanding of the student profiles. 
 
@@ -308,7 +306,7 @@ grid.arrange(
 
 T-test and linear modelling tools were used. The mean score difference of test 1 is not significantly different from each other, Welch t(196.54) = -1.05, p = 0.30 was concluded. The mean score for Non-tutored students is 52.9 95% CI [50.4–55.4] before the scheme. The mean score for Tutored students is 54.8 95% CI [52.3–57.3] before the scheme. The mean score is 1.88 95% CI [-1.67–5.43] smaller for Non-tutored students compared to Tutored students.
 
-### Relationship between mean absence rates and tutoring
+## Relationship between mean absence rates and tutoring
 
 First, a t-test was conducted. 
 
@@ -359,7 +357,7 @@ grid.absences.main.effect.score.t1
 
 Even though taking test score 1 into consideration proved to improve the model, the difference in absence rates is not significant.
 
-### Relationship between tutoring and test score differences
+## Relationship between tutoring and test score differences
 
 Following examining the absence and test score relationships by tutoring information, whether the tutored students show an increase in their scores compared to the students who did not receive tutoring was inspected. Prior to any further analysis, the score difference for each student was calculated.
 
@@ -379,7 +377,7 @@ The mean of the score differences for Non-tutored students is significantly larg
 score.difference.plot
 ```
 
-### Relationship between absences and test score difference and investigating the interaction with tutoring
+## Relationship between absences and test score difference and investigating the interaction with tutoring
 
 Finally, whether there are any effects of absences on the change in scores, and whether these have any interaction with the effect of tutoring were inspected.
 
